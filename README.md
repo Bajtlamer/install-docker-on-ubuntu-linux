@@ -2,7 +2,7 @@
 This is a small guide, how to install docker on Ubuntu linux
 
 ## Prepare system for the installation
-```bash
+```
 apt-get update
 
 sudo apt-get install \
@@ -12,46 +12,46 @@ sudo apt-get install \
     lsb-release
 ```
 #### Add Docker’s official GPG key:
-```bash
+```
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
 #### Use following command to setup repository
-```bash
+```
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 ## Install Docker Engine
-```bash
+```
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 List the versions available in your repo:
-```bash
+```
 apt-cache madison docker-ce
 ```
 Install a specific version using the version string from the second column, for example, `5:20.10.16~3-0~ubuntu-jammy`.
-```bash
+```
 sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=<VERSION_STRING> containerd.io docker-compose-plugin
 ```
 Now, run the first docker container:
-```bash
+```
 sudo docker run hello-world
 ```
 ## Post-installation steps for Linux
 Create the `docker` group.
-```bash
+```
 sudo groupadd docker
 ```
 Add your user to the docker group:
-```bash
+```
 sudo usermod -aG docker $USER
 
 newgrp docker 
 ```
 Verify, that you can run `docker` commands without `sudo`:
-```bash
+```
 docker run hello-world
 ```
 
@@ -63,23 +63,23 @@ WARNING: Error loading config file: /home/user/.docker/config.json -
 stat /home/user/.docker/config.json: permission denied
 ```
 then try to fix this problem, either remove the ~/.docker/ directory (it is recreated automatically, but any custom settings are lost), or change its ownership and permissions using the following commands:
-```bash
+```
 sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
 sudo chmod g+rwx "$HOME/.docker" -R
  ```
  
 ## Configure Docker to start on boot
-```bash
+```
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 ```
 To disable this behavior, use disable instead.
-```bash
+```
 sudo systemctl disable docker.service
 sudo systemctl disable containerd.service
 ```
 ## Install Docker-Compose
-```bash
+```
 url -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 chmod +x /usr/local/bin/docker-compose
@@ -88,15 +88,15 @@ docker-compose --version
 ```
 #### Test installation
 Create a new directory for your sample container
-```bash
+```
 mkdir test
 ```
 Change directory that you just created:
-```bash
+```
 vim docker-compose.yaml
 ```
 And copy the following configuration into `docker-compose.yaml` file:
-```bash
+```
 version: '3.3'
 services:
    hello-world:
@@ -104,7 +104,7 @@ services:
          hello-world:latest
 ```
 Next, run the following command to pull the hello-world image on your system:
-```bash
+```
 docker-composer up
 ```
 
