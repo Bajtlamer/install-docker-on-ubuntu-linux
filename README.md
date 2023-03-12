@@ -2,7 +2,7 @@
 This is a small guide, how to install docker on Ubuntu linux
 
 ## Prepare system for the installation
-```
+```bash
 apt-get update
 
 sudo apt-get install \
